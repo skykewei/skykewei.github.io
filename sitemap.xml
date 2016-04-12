@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>http://skykewei.top/blog/2016/04/12/octopress-ubuntu14-dot-04-tutorial/</loc>
+<lastmod>2016-04-12T22:05:23+08:00</lastmod>
+</url>
+<url>
+<loc>http://skykewei.top/blog/2016/04/10/ceph-a-new-store-is-coming/</loc>
+<lastmod>2016-04-10T20:06:32+08:00</lastmod>
+</url>
+<url>
+<loc>http://skykewei.top/blog/2016/04/10/helloworld/</loc>
+<lastmod>2016-04-10T16:05:42+08:00</lastmod>
+</url>
+<url>
+<loc>http://skykewei.top/blog/archives/</loc>
+</url>
+<url>
+<loc>http://skykewei.top/</loc>
+</url>
+<url>
+<loc>http://skykewei.top/about/</loc>
+</url>
+<url>
+<loc>http://skykewei.top/blog/categories/test/</loc>
+</url>
+<url>
+<loc>http://skykewei.top/blog/categories/ceph/</loc>
+</url>
+<url>
+<loc>http://skykewei.top/blog/categories/web/</loc>
+</url>
+</urlset>

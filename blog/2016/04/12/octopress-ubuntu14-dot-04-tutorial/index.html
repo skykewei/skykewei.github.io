@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>像黑客一样写blog：Ubuntu14.04+Octopress+Github Pages - WenShu's Blog</title>
+  <meta name="author" content="WenShu">
+
+  
+  <meta name="description" content="之前在windows 10 上部署了一套Octopress环境，但是如果要发布博客，就只有在安装了Octopress环境才能发布blog.因为就有了这篇写在Ubuntu14.04系统中的文章。与在windows上安装有些不同，有些需要注意的问题，在这篇文章会指出这些问题，并给出解决办法。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://skykewei.top/blog/2016/04/12/octopress-ubuntu14-dot-04-tutorial/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="WenShu's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!--<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">-->
+<!--<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">-->
+<script>
+  function addBlankTargetForLinks () {
+    $('a[href^="http"]').each(function(){
+      $(this).attr('target', '_blank');
+    });
+  }
+  $(document).bind('DOMNodeInserted', function(event) {
+    addBlankTargetForLinks();
+  });
+</script>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">WenShu's Blog</a></h1>
+  
+    <h2>River Flows In You.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="skykewei.top">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About Me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">像黑客一样写blog：Ubuntu14.04+Octopress+Github Pages</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-04-12T22:05:23+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:05 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>之前在windows 10 上部署了一套Octopress环境，但是如果要发布博客，就只有在安装了Octopress环境才能发布blog.因为就有了这篇写在Ubuntu14.04系统中的文章。与在windows上安装有些不同，有些需要注意的问题，在这篇文章会指出这些问题，并给出解决办法。希望此篇文章能够为有意在Ubuntu14.04上安装Octopress环境的同学提供一个参考操作步骤。如有不确之处，还请批评指正。</p>
+
+<blockquote><ul>
+<li><strong><em>基本工具介绍</em></strong></li>
+<li><strong><em>安装依赖</em></strong></li>
+<li><strong><em>安装Octopress</em></strong></li>
+<li><strong><em>发布Github Pages</em></strong></li>
+<li><strong><em>绑定私有域名</em></strong></li>
+<li><strong><em>发布第一篇Blog</em></strong></li>
+<li><strong><em>换台电脑继续写博客</em></strong></li>
+<li><strong><em>参考链接</em></strong></li>
+</ul>
+</blockquote>
+
+<!--more-->
+
+
+<h2>基础工具介绍</h2>
+
+<p>此次环境部署是在使用VMware12pro创建的Ubuntu14.04虚拟机中创建的，关于如何安装创建Ubuntu虚拟机不在本文讨论范围，读者自行咨询<a href="https://www.google.com.hk/search?q=vmware+12+%E8%99%9A%E6%8B%9F%E6%9C%BA+ubuntu+14.04&amp;rlz=1C1CHUN_zh-CNCN651CN651&amp;oq=vmware+12+%E8%99%9A%E6%8B%9F%E6%9C%BA+ubuntu+14.04&amp;aqs=chrome..69i57.941j0j9&amp;sourceid=chrome&amp;ie=UTF-8">谷歌老师</a>。在这里简要介绍一下<a href="http://octopress.org/">Octopress</a>，Markdown，Github Pages和Git。</p>
+
+<h3>Octopress</h3>
+
+<p>Octopress与Wordpress类似，也是搭建个人博客的工具。本人不熟悉Wordpress在此不再赘述。Octopree非常灵活，可定制性非常强，如果熟悉Markdown(一种简单的标记语言，下文简单介绍)以及简单的Ruby语言，就可以自定义实现诸多功能。Octopress主要有三大优势：</p>
+
+<ol>
+<li>Octopress完全免费开源。并且可以将Octopress搭建的博客绑定到你个人的Github Pages(也是个人免费的)上，无需额外购买博客服务器。</li>
+<li>A blogging framework for hackers. 这是Octopress<a href="http://octopress.org">官网</a>大标题上的一句话。Octopress是专为黑客而生，能够像黑客写代码一样来写博客。</li>
+<li>Octopress可以完全定制，可以根据自己的需要充分定制，纯代码生成，同时Octopress拥有庞大的用户社区，如有问题可以在社区中寻求帮助，在搜索引擎中搜索Octopress关键字，可以得到数以亿计的结果，由此可见Octopress是受到诸多人的喜爱和使用的。</li>
+</ol>
+
+
+<h3>Markdown</h3>
+
+<p>Markdown是一种纯文本标记语法，非常简单，完全可以使用系统中的纯文本文件编辑器进行编写。虽然简单，但是却可以生成表现力极强的文档。Octopress中发布的每篇博文都是以<code>.markdown</code> 为后缀命名的。每篇博文都是一个完整的Markdown文档，Markdown非常简单，即使是非IT专业人士也可以非常容易上手，并很快写出格式规范，精彩的文章。虽然Markdown文档可以使用纯文本编辑器编辑书写，但有很多很方便所见即所得的编辑器。在这里推荐几款非常流行的markdown编辑器，<a href="http://markdownpad.com/">MarkdownPad2</a>和作业部落出品的<a href="https://www.zybuluo.com/mdeditor">Cmd Markdown</a>，这些编辑器所即所得并且非常简便易用。在Octopress发布博客时，我们可以使用这些工具编辑我们的<code>.markdown</code>文档，然后保存在<code>/octopress/source/_posts</code>文件夹中，然后运行Octopress生成部署命令发布出去(参见下文)。</p>
+
+<h3>Github Pages和Git</h3>
+
+<p>Github Pages和依托Github平台开发出的一款提供静态网站的产品。<a href="https://github.com/">Github</a>是一个著名的代码托管网站，码农应该没有不知道的。若要使用该产品，首先需要一个<a href="https://github.com/">Github</a>的一个账号。</p>
+
+<p>在有了Github账号后，需要在这个账号中创建一个仓库<code>new repository</code>,此时需要注意，创建的仓库名字格式必须为<code>yourname.github.io</code>,这里的<code>yourname</code>必须是你在Github上的创建账号时使用的用户名，这是受到Github Pages产品服务所限制约定的，否则无法使用Github Pages服务。Github Pages服务根据你创建的仓库名字自动识别为这是一个用来创建Github Pages仓库，也就是说一个Github账号只能创建一个Github Page仓库。之后使用Octopress上传到这个仓库里面所有博客的源代码以及其他所需文档。Octopress如何上传并绑定这个Github Pages仓库，下文分解。</p>
+
+<p>Git是什么？从名字上看就和Github脱不开关系。简要来说Git是一个分布式版本控制系统，Github本身是一个代码托管平台，它所使用的代码管理系统就是Git。如果稍微熟悉Linux操作系统的人，肯定知道一个非常著名的计算机界的传奇人物Linus，他正是Git的创造人，在此致敬！</p>
+
+<p>当你使用Git管理你自己的代码时，你本地电脑上和远程服务器上都有一个完整的代码版本库。通过Git，团队协作时可以非常方便的彼此推送自己修改的部分代码。</p>
+
+<h2>安装依赖</h2>
+
+<p>下面开始接受Octopress安装过程，本文虽然是在Ubuntu14.04系统之上搭建，但是在其他系统Windows，Mac OS也是非常类似的。</p>
+
+<p>首先安装Octopress的依赖软件：<code>ruby</code>，<code>nodejs</code>，<code>git</code>。</p>
+
+<p><strong>安装Ruby</strong></p>
+
+<p>为了安装Ruby，我们使用<a href="https://rvm.io/">Ruby Version Manager</a> (RVM),使用RVM你可以同时安装多个版本的Ruby，可以在不同版本之间非常容易的进行切换。安装Ruby在命令终端输入：</p>
+
+<figure class='code'><figcaption><span>安装RVM　</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ curl -L https://get.rvm.io | bash -s stable --ruby
+</span><span class='line'>$ #重启 shell
+</span><span class='line'>$ source ~/.rvm/scipts/rvm #实际安装时具体路径可能不同，在命令输出中会有提示，以实际命令输出为准
+</span><span class='line'>$ #检查RVM是否安装成功
+</span><span class='line'>$ rvm -v
+</span><span class='line'>$ #检查Ruby是否安装成功
+</span><span class='line'>$ ruby -v</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果rvm安装过程中，没有同时安装ruby，可以手动安装</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm install 2.3.0
+</span><span class='line'>$ rvm use 2.3.0
+</span><span class='line'>$ rvm rubygems latest</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此时，ruby环境安装完成。</p>
+
+<p><strong>安装Nodejs</strong></p>
+
+<p>安装<code>nodejs</code>是要给Octopress提供javascrpt编译环境，否则就会出现<code>javascript runtime error</code>。</p>
+
+<pre><code>$ sudo apt-get install nodejs
+</code></pre>
+
+<p><strong>安装Git</strong></p>
+
+<p>只有安装了<code>git</code>， Octopress才可以使用git把源代码<code>clone</code>到本地并<code>push</code>到Github。</p>
+
+<pre><code>$ sudo apt-get install git
+</code></pre>
+
+<p>我们的博客源代码是被推送到Github Pages的远程仓库的。Octopress是使用Git工具把源代码文件推送到远程仓库，因此本地的octopress需要和远程仓库之间建立一种信任关系，远程Github Pages远程仓库需要确认推送操作实施者有权限执行推送操作。这种信任关系是通过<em>ssh key</em>建立的。简单来说一个<em>ssh key</em> 对应一个授权，当你在多台电脑部署了octopress环境，但有希望多个octopress部署发布同一个Github Pages时，可以在Github账号中添加多个<em>ssh key</em>。</p>
+
+<p>首先，在本地创建<em>ssh key</em>，执行命令：</p>
+
+<pre><code>$ ssh-keygen -t rsa -C "yourmail@example.com"
+</code></pre>
+
+<p>特别注意这里的email是你在注册Github账号使用的注册emial地址，方便起见，之后一路回车，不必输入任何东西即可创建一个<em>ssh key</em>。 在<code>~/.ssh</code>目录中可以看到<code>id_rsa</code>和<code>id_ras.pub</code>两个文件，分别是私钥和公钥，私钥不要泄露，否则任何人得到私钥就能对你的远程仓库做任何操作。</p>
+
+<p>需要把公钥<code>id_rsa.pub</code>提交到你的Github账号中。登录你的Github账号，打开<code>Account settings</code>中的<code>SSH keys</code>页面，点击<code>Add SSH Key</code> title可任意填写，在Key的文本框中粘贴<code>id_rsa.pub</code>文件中的所有内容然后保存。此后你就可以在本地使用Git工具push代码到你的Github中了。</p>
+
+<h2>安装Octopress</h2>
+
+<p><strong>1)</strong>首先把Octopress源代码从Github上克隆到本地</p>
+
+<pre><code>$ git clone git://github.com/imathis/octopress.git octopress
+</code></pre>
+
+<p>执行此命令后就可以看到在当前目录下有个octopress文件夹，里面就是octopress的源代码文件。</p>
+
+<p><strong>*2)</strong>安装Octopress依赖项</p>
+
+<pre><code>$ gem install bundler
+$ bundle install
+</code></pre>
+
+<p>至此octopress的相关依赖安装完成。</p>
+
+<p>运行以下命令可以在本地预览博客效果：</p>
+
+<pre><code>$ rake install
+$ rake preview
+</code></pre>
+
+<p><code>rake</code>是<code>ruby+make</code>的简写。octopress底层是基于ruby编写的jekyll框架的。与octopress操作的命令都会用到rake。
+运行命令<code>rake preview</code>后，在浏览器中输入<code>http://localhost:4000</code> 可以在本地预览博客效果。此时会看到一个最基本的页面。</p>
+
+<h2>发布Github Pages</h2>
+
+<p>此时，Octopress博客只是在你本地的浏览器中能够访问到，但我们的目的是把自己的博客发布到外面的互联网上，这样全世界接入互联网的人都能够看到我们自己的博客了。我们选择Github Pages服务来发布我们的博客，使用Octopress可以非常方便的和Github Pages服务进行绑定。</p>
+
+<p>Octopress发布到Github Pages上本质就是把Octopress在本地生成的源代码和静态页面使用Git分布式版本控制系统推送到Github 的Github Pages的仓库<code>yourname.github.io</code>中。 Github 仓库目前同时支持ssh和https协议的url。在你的仓库中，可以看到<code>git@github.com:yourname/yourname.github.io.git</code>和<code>https://github.com/yourname/yourname.github.io.git</code>类似的url。Octopress可以任选其中之一进行绑定。运行下面命令：</p>
+
+<pre><code>$ rake setup_github_pages
+</code></pre>
+
+<p>之后会提示你输入前面提到的url，任选其中一种输入即可。</p>
+
+<p>在执行下面命令：</p>
+
+<pre><code>$ rake generate
+$ rake deploy
+</code></pre>
+
+<p>也可执行：</p>
+
+<pre><code>$ rake gen_deploy
+</code></pre>
+
+<p>这个命令是相当于你执行上面两条命令，是一种简写方式。</p>
+
+<p>现在任何人都可以在浏览器中输入网址<code>yourname.github.io</code> 访问你自己刚刚搭建的博客了。</p>
+
+<blockquote><p>再说说两者之间绑定的原理，在执行<code>rake setup_github_pages</code>命令之后，octopress文件夹中会多一个<em>deploy 目录，在你未修改任何与octopress相关主题或者增加博文之前，里面只有一个<code>index.html</code>文件，也就是默认主题的首页。里面的内容都是octopress源码编译之后生成的目标文件，</em>deploy 目录被当做master分支，请注意，在github中创建的<code>username/username.github.io</code>仓库中也有一个默认称为master 的分支，octopress仓库中除了<em>deploy 目录外，其它都被octopress当做source 分支，关于git技术中分支的概念，可自行查询前文git相关文档介绍。octopress的思想就是在source 分支保存整个框架所需要的文件以及写的博文<code>.markdown</code>文件，将每次生成的html文件全部放进</em>deploy目录中，再将<em>deploy目录所有的文件推送到github pages仓库中，这时便可通过<code>username.github.io</code>访问到生成好的html文件，也就是</em>deploy目录中的文件，至于其它source 分支文件，也可以推送到github中备份，此过程不影响octopress的生成效果，只是防止本地文件丢失无法恢复带来的不良后果，可执行以下代码完成source分支的备份：</p></blockquote>
+
+<p> <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
+</span><span class='line'> $ git commit -m &lsquo;commit message&rsquo;
+</span><span class='line'> $ git push origin source</span></code></pre></td></tr></table></div></figure></p>
+
+<blockquote><p>另外，rake generate 做的实质是把octopress框架生成的文件放进octopress/public 文件夹中，rake deploy 做的实质是将octopress/public 中的文件拷贝到octopress/_deploy 文件夹中并将其中的文件推送到username.github.io 仓库中。</p></blockquote>
+
+<h2>绑定私有域名</h2>
+
+<p>目前你可以使用<code>yourname.github.io</code>这样的二级域名访问你自己的博客。当然你也可以绑定自己购买的域名。具体域名购买方式请咨询<a href="https://www.google.com.hk/search?q=%E5%9F%9F%E5%90%8D%E8%B4%AD%E4%B9%B0&amp;oq=%E5%9F%9F%E5%90%8D%E8%B4%AD%E4%B9%B0">谷歌老师</a>,这里假设你已经购买了一个域名<code>yourname.org</code>
+,下面就需要把这个域名地址指向你刚刚搭建好的博客<code>yourname.github.io</code>. 首先在本地目录octopress/source/下面新建一个名为<code>CNAME</code>的文本文件，写入<code>yourname.org</code> ，在执行octopress部署命令<code>rake gen_deploy</code> 发布到Github Pages中，此时还无法使用你的域名访问。下一步需要把你的域名解析指向你的Github Pages所在服务器的IP地址。执行下面命令获取IP地址：</p>
+
+<pre><code> $ ping yourname.github.io
+</code></pre>
+
+<p>之后登陆你购买域名的管理中心，找到域名解析的配置项。具体细节不再赘述。至此，你就拥有了一个可以使用自己购买域名访问的博客了。</p>
+
+<h2>发布第一篇Blog</h2>
+
+<p>执行下面命令：</p>
+
+<pre><code>$ rake new_post["Post Tile"]
+</code></pre>
+
+<p>会在<code>octopress/source/_posts</code>目录下生产一个名称为<code>yyyy-mm-dd-Post-Tile.markdown</code>的Markdown文件。这个文件就是你要发布的博文的具体内容。编辑完成这个文档后执行命令：</p>
+
+<pre><code>$ rake gen_deploy
+</code></pre>
+
+<p>再次在浏览器中输入你的域名就能访问你刚刚写的博文了。Exciting！</p>
+
+<p>此时你的远程Github Pages仓库是没有你的本地octopress所有源代码的，如果你的本地电脑因为不当操作造成octopress源文件的损坏，很可能就会无法继续发布博文了，保险起见，执行如下命令把octopress所有的源文件推送到远程仓库中,在octopress目录下</p>
+
+<p> <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
+</span><span class='line'> $ git commit -m &lsquo;commit message&rsquo;
+</span><span class='line'> $ git push -u origin source</span></code></pre></td></tr></table></div></figure></p>
+
+<h2>换台电脑继续写博客</h2>
+
+<p>如果只是到此为止，那么你发布博文都只能通过当前使用的电脑进行。如果想换一台电脑怎么做呢？这也很简单，详情如下。</p>
+
+<p>1 首先要确保每次修改本地内容后都提交到了Github Pages远程仓库的source分支中。 并且切换后的当前的电脑有octopress的依赖环境，详情请看前文。</p>
+
+<p>2 执行下面命令：</p>
+
+<p> <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone git@github.com:yourname/yourname.github.io.git
+</span><span class='line'> $ cd yourname.github.io
+</span><span class='line'> $ git checkout source</span></code></pre></td></tr></table></div></figure></p>
+
+<p>  之后就可以像前文操作一样发布博文了。</p>
+
+<p>3 如果想要换回原来电脑，此时一定要记得每次修改本地内容后都要在octopress顶层目录下执行push操作。</p>
+
+<pre><code>$ git pull origin source
+</code></pre>
+
+<p>熟悉Git的童鞋肯定知道上面的操作都是很简单的Git的命令操作。
+只需要执行这么简单几个Git命令，就可以在不同的电脑之间来回切换了。</p>
+
+<h2>参考链接</h2>
+
+<p><a href="http://www.chongh.wiki/blog/2015/12/16/octopress-tutorial/">Octopress在Mac下的安装配置</a></p>
+
+<p><a href="http://www.yebangyu.org/blog/2015/10/17/howtoinstalloctopress/">Windows下OctoPress环境搭建</a></p>
+
+<p>上面两篇博文的作者分别是我的好友<a href="http://www.yebangyu.org">邦宇</a> 和 <a href="http://www.chongh.wiki">冲华</a>,本篇博文参考这两篇文章甚多，受益匪浅。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">WenShu</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-04-12T22:05:23+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:05 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/web/'>web</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/04/10/ceph-a-new-store-is-coming/" title="Previous Post: Ceph Jewel 功能预览 : 即将到来的新存储BlueStore">&laquo; Ceph Jewel 功能预览 : 即将到来的新存储BlueStore</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/04/12/octopress-ubuntu14-dot-04-tutorial/">像黑客一样写blog：Ubuntu14.04+Octopress+Github Pages</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/10/ceph-a-new-store-is-coming/">Ceph Jewel 功能预览 : 即将到来的新存储BlueStore</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/10/helloworld/">我的第一篇Octoperss博客</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section> 
+  <h1>Categories</h1> 
+  <ul id="categories"> 
+    <li class='category'><a href='/blog/categories/ceph/'>ceph (1)</a></li>
+<li class='category'><a href='/blog/categories/test/'>test (1)</a></li>
+<li class='category'><a href='/blog/categories/web/'>web (1)</a></li>
+ 
+  </ul> 
+</section><section>
+  <h1>Friends' Link</h1>
+  <ul>
+     <li>
+        <a href="http://www.yebangyu.org/">Bangyu</a>
+     </li>
+     <li>
+        <a href="http://www.chongh.wiki/">Chonghua</a>
+     </li>
+     <li>   
+        <a href="http://www.xiaolili.net/">Wangli</a>
+     </li>
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>An excellent programmer!</p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - WenShu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>
+  
+  </span>
+  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1258541220'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1258541220%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+</p>
+
+
+</footer>
+  
+
+
+
+
+
+
+<!--
+-->
+
+
+
+</body>
+</html>
