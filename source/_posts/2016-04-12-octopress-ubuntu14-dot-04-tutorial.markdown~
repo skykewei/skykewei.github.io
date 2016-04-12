@@ -71,9 +71,9 @@ $ ruby -v
 如果rvm安装过程中，没有同时安装ruby，可以手动安装
 
 {% codeblock %}
-$ rvm install 2.3.0
-$ rvm use 2.3.0
-$ rvm rubygems latest
+    $ rvm install 2.3.0
+    $ rvm use 2.3.0
+    $ rvm rubygems latest
 {% endcodeblock %}
 
 此时，ruby环境安装完成。
