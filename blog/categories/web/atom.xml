@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Web | WenShu's Blog]]></title>
   <link href="http://skykewei.github.io/blog/categories/web/atom.xml" rel="self"/>
   <link href="http://skykewei.github.io/"/>
-  <updated>2016-04-12T05:46:48-07:00</updated>
+  <updated>2016-04-12T05:52:24-07:00</updated>
   <id>http://skykewei.github.io/</id>
   <author>
     <name><![CDATA[WenShu]]></name>
@@ -74,16 +74,15 @@
 
 <p>为了安装Ruby，我们使用<a href="https://rvm.io/">Ruby Version Manager</a> (RVM),使用RVM你可以同时安装多个版本的Ruby，可以在不同版本之间非常容易的进行切换。安装Ruby在命令终端输入：</p>
 
-<pre><code>｛％codeblock 安装RVM linenos:true％｝
-$ curl -L https://get.rvm.io | bash -s stable --ruby
-$ #重启 shell
-$ source ~/.rvm/scipts/rvm #实际安装时具体路径可能不同，在命令输出中会有提示，以实际命令输出为准
-$ #检查RVM是否安装成功
-$ rvm -v
-$ #检查Ruby是否安装成功
-$ ruby -v
-{%endcodeblock%}
-</code></pre>
+<p>   ｛% codeblock 安装RVM linenos:true　%}
+    $ curl -L <a href="https://get.rvm.io">https://get.rvm.io</a> | bash -s stable &ndash;ruby
+    $ #重启 shell
+    $ source ~/.rvm/scipts/rvm #实际安装时具体路径可能不同，在命令输出中会有提示，以实际命令输出为准
+    $ #检查RVM是否安装成功
+    $ rvm -v
+    $ #检查Ruby是否安装成功
+    $ ruby -v
+　　　　{% endcodeblock %}</p>
 
 <p>如果rvm安装过程中，没有同时安装ruby，可以手动安装</p>
 
