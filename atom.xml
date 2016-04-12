@@ -4,7 +4,7 @@
   <title><![CDATA[WenShu's Blog]]></title>
   <link href="http://skykewei.github.io/atom.xml" rel="self"/>
   <link href="http://skykewei.github.io/"/>
-  <updated>2016-04-12T05:12:31-07:00</updated>
+  <updated>2016-04-12T05:24:15-07:00</updated>
   <id>http://skykewei.github.io/</id>
   <author>
     <name><![CDATA[WenShu]]></name>
@@ -72,18 +72,17 @@
 
 <p><strong>安装Ruby</strong></p>
 
-<p>为了安装Ruby，我们使用<a href="https://rvm.io/">Ruby Version Manager</a> (RVM),使用RVM你可以同时安装多个版本的Ruby，可以在不同版本之间非常容易的进行切换。安装Ruby在命令终端输入：</p>
-
-<pre><code>$ curl -L https://get.rvm.io | bash -s stable --ruby
-$ #重启 shell
-$ source ~/.rvm/scipts/rvm #实际安装时具体路径可能不同，在命令输出中会有提示，以实际命令输出为准
-$ #检查RVM是否安装成功
-$ rvm -v
-$ #检查Ruby是否安装成功
-$ ruby -v
-</code></pre>
-
-<p>如果rvm安装过程中，没有同时安装ruby，可以手动安装</p>
+<p>为了安装Ruby，我们使用<a href="https://rvm.io/">Ruby Version Manager</a> (RVM),使用RVM你可以同时安装多个版本的Ruby，可以在不同版本之间非常容易的进行切换。安装Ruby在命令终端输入：
+   <code>linenos:true
+    $ curl -L https://get.rvm.io | bash -s stable --ruby
+    $ #重启 shell
+    $ source ~/.rvm/scipts/rvm #实际安装时具体路径可能不同，在命令输出中会有提示，以实际命令输出为准
+    $ #检查RVM是否安装成功
+    $ rvm -v
+    $ #检查Ruby是否安装成功
+    $ ruby -v
+   </code>
+如果rvm安装过程中，没有同时安装ruby，可以手动安装</p>
 
 <pre><code>$ rvm install 2.3.0
 $ rvm use 2.3.0
@@ -342,18 +341,6 @@ $ git checkout source
 
 
 <blockquote><p><em>Ceph Jewel版本一经发布，我们就可以使用Ceph中的BlueStore。 如果我没有搞错的话，BlueStore虽然可用但它是个技术预览版本，我无法肯定我们是否应该在生产环境中使用。为了确认这件事还请仔细阅读它的发布日志。 正如我们所看到的，Ceph在存储驱动方面投入了越来越多的精力。BlueStore使用RocksDB存储日志从而不再需要预写式日志。我还没有对BlueStore做任何基准测试，但是我们定将不再需要专门的存储设备来存储日志。这对于数据中心的管理角度来看无疑极具吸引力。每一个OSD都是独立的，因此它可以由一个服务器上非常简单的迁移到另一个服务器上并可顺利运行。这个特性并不新鲜，如果我没有记错的话，这个特性是在Ceph的Firefly版本在udev系统规则下就被引入的，简单来说，就是当你热插拔系统中的一个新的包含一个OSD的硬盘时，这将触发一个udev事件，该事件将会激活这个OSD。考虑到无需使用专门的设备存储Ceph的日志，依据你的集群的不同目标BlueStore在不同程度上增强了这个特性。无论在同样的存储设备上运行什么，BlueStore的性能至少对成本容量比和吞吐量优化足够。</em></p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Test]]></title>
-    <link href="http://skykewei.github.io/blog/2016/04/10/test/"/>
-    <updated>2016-04-10T02:30:51-07:00</updated>
-    <id>http://skykewei.github.io/blog/2016/04/10/test</id>
-    <content type="html"><![CDATA[<p>This is a test.
-for test.</p>
-
-<p>22:57 test</p>
 ]]></content>
   </entry>
   
