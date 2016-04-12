@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://skykewei.github.io/blog/2016/04/12/octopress-ubuntu14-dot-04-tutorial/</loc>
+<lastmod>2016-04-12T04:05:23-07:00</lastmod>
+</url>
+<url>
 <loc>http://skykewei.github.io/blog/2016/04/10/ceph-a-new-store-is-coming/</loc>
 <lastmod>2016-04-10T05:06:32-07:00</lastmod>
 </url>
@@ -26,5 +30,8 @@
 </url>
 <url>
 <loc>http://skykewei.github.io/blog/categories/ceph/</loc>
+</url>
+<url>
+<loc>http://skykewei.github.io/blog/categories/web/</loc>
 </url>
 </urlset>
