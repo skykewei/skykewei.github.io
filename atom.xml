@@ -4,7 +4,7 @@
   <title><![CDATA[WenShu's Blog]]></title>
   <link href="http://skykewei.github.io/atom.xml" rel="self"/>
   <link href="http://skykewei.github.io/"/>
-  <updated>2016-04-12T05:53:48-07:00</updated>
+  <updated>2016-04-12T05:56:40-07:00</updated>
   <id>http://skykewei.github.io/</id>
   <author>
     <name><![CDATA[WenShu]]></name>
@@ -74,9 +74,7 @@
 
 <p>为了安装Ruby，我们使用<a href="https://rvm.io/">Ruby Version Manager</a> (RVM),使用RVM你可以同时安装多个版本的Ruby，可以在不同版本之间非常容易的进行切换。安装Ruby在命令终端输入：</p>
 
-<pre><code>&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;安装RVM linenos:true　&lt;/span&gt;&lt;/figcaption&gt;
-</code></pre>
-
+<figure class='code'><figcaption><span>安装RVM linenos:true　</span></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -84,26 +82,14 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ curl -L https://get.rvm.io | bash -s stable --ruby
-</span><span class='line'>    $ #重启 shell
-</span><span class='line'>    $ source ~/.rvm/scipts/rvm #实际安装时具体路径可能不同，在命令输出中会有提示，以实际命令输出为准
-</span><span class='line'>    $ #检查RVM是否安装成功
-</span><span class='line'>    $ rvm -v
-</span><span class='line'>    $ #检查Ruby是否安装成功
-</span><span class='line'>    $ ruby -v
-</span><span class='line'>　　　　</span></code></pre></td></tr></table></div>
+</span><span class='line'>$ #重启 shell
+</span><span class='line'>$ source ~/.rvm/scipts/rvm #实际安装时具体路径可能不同，在命令输出中会有提示，以实际命令输出为准
+</span><span class='line'>$ #检查RVM是否安装成功
+</span><span class='line'>$ rvm -v
+</span><span class='line'>$ #检查Ruby是否安装成功
+</span><span class='line'>$ ruby -v</span></code></pre></td></tr></table></div></figure>
 
-
-<p></figure></notextile></div></p>
-
-<pre><code>&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
-</code></pre>
-
-<p><span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">rectangle</span> <span class="nl">setX</span><span class="p">:</span> <span class="mi">10</span> <span class="nl">y</span><span class="p">:</span> <span class="mi">10</span> <span class="nl">width</span><span class="p">:</span> <span class="mi">20</span> <span class="nl">height</span><span class="p">:</span> <span class="mi">20</span><span class="p">];</span>
-</span><span class='line'>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>如果rvm安装过程中，没有同时安装ruby，可以手动安装</p>
 
