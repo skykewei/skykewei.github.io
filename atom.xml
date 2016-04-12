@@ -4,7 +4,7 @@
   <title><![CDATA[WenShu's Blog]]></title>
   <link href="http://skykewei.github.io/atom.xml" rel="self"/>
   <link href="http://skykewei.github.io/"/>
-  <updated>2016-04-12T05:24:15-07:00</updated>
+  <updated>2016-04-12T05:31:18-07:00</updated>
   <id>http://skykewei.github.io/</id>
   <author>
     <name><![CDATA[WenShu]]></name>
@@ -37,7 +37,7 @@
 
 <h2>基础工具介绍</h2>
 
-<p>此次环境部署是在使用VMware12pro创建的Ubuntu14.04虚拟机中创建的，关于如何安装创建Ubuntu虚拟机不在本文讨论范围，读者可以自信咨询<a href="https://www.google.com.hk/search?q=vmware+12+%E8%99%9A%E6%8B%9F%E6%9C%BA+ubuntu+14.04&amp;rlz=1C1CHUN_zh-CNCN651CN651&amp;oq=vmware+12+%E8%99%9A%E6%8B%9F%E6%9C%BA+ubuntu+14.04&amp;aqs=chrome..69i57.941j0j9&amp;sourceid=chrome&amp;ie=UTF-8">谷歌老师</a>。在这里简要介绍一下<a href="http://octopress.org/">Octopress</a>，Markdown，Github Pages和Git。</p>
+<p>此次环境部署是在使用VMware12pro创建的Ubuntu14.04虚拟机中创建的，关于如何安装创建Ubuntu虚拟机不在本文讨论范围，读者自行咨询<a href="https://www.google.com.hk/search?q=vmware+12+%E8%99%9A%E6%8B%9F%E6%9C%BA+ubuntu+14.04&amp;rlz=1C1CHUN_zh-CNCN651CN651&amp;oq=vmware+12+%E8%99%9A%E6%8B%9F%E6%9C%BA+ubuntu+14.04&amp;aqs=chrome..69i57.941j0j9&amp;sourceid=chrome&amp;ie=UTF-8">谷歌老师</a>。在这里简要介绍一下<a href="http://octopress.org/">Octopress</a>，Markdown，Github Pages和Git。</p>
 
 <h3>Octopress</h3>
 
@@ -72,17 +72,20 @@
 
 <p><strong>安装Ruby</strong></p>
 
-<p>为了安装Ruby，我们使用<a href="https://rvm.io/">Ruby Version Manager</a> (RVM),使用RVM你可以同时安装多个版本的Ruby，可以在不同版本之间非常容易的进行切换。安装Ruby在命令终端输入：
-   <code>linenos:true
-    $ curl -L https://get.rvm.io | bash -s stable --ruby
-    $ #重启 shell
-    $ source ~/.rvm/scipts/rvm #实际安装时具体路径可能不同，在命令输出中会有提示，以实际命令输出为准
-    $ #检查RVM是否安装成功
-    $ rvm -v
-    $ #检查Ruby是否安装成功
-    $ ruby -v
-   </code>
-如果rvm安装过程中，没有同时安装ruby，可以手动安装</p>
+<p>为了安装Ruby，我们使用<a href="https://rvm.io/">Ruby Version Manager</a> (RVM),使用RVM你可以同时安装多个版本的Ruby，可以在不同版本之间非常容易的进行切换。安装Ruby在命令终端输入：</p>
+
+<pre><code>``` linenos:true
+$ curl -L https://get.rvm.io | bash -s stable --ruby
+$ #重启 shell
+$ source ~/.rvm/scipts/rvm #实际安装时具体路径可能不同，在命令输出中会有提示，以实际命令输出为准
+$ #检查RVM是否安装成功
+$ rvm -v
+$ #检查Ruby是否安装成功
+$ ruby -v
+```
+</code></pre>
+
+<p>如果rvm安装过程中，没有同时安装ruby，可以手动安装</p>
 
 <pre><code>$ rvm install 2.3.0
 $ rvm use 2.3.0
