@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Web | WenShu's Blog]]></title>
   <link href="http://skykewei.github.io/blog/categories/web/atom.xml" rel="self"/>
   <link href="http://skykewei.github.io/"/>
-  <updated>2016-04-12T06:02:49-07:00</updated>
+  <updated>2016-04-12T06:04:42-07:00</updated>
   <id>http://skykewei.github.io/</id>
   <author>
     <name><![CDATA[WenShu]]></name>
@@ -180,13 +180,12 @@ $ rake deploy
 
 <blockquote><p>再说说两者之间绑定的原理，在执行<code>rake setup_github_pages</code>命令之后，octopress文件夹中会多一个<em>deploy 目录，在你未修改任何与octopress相关主题或者增加博文之前，里面只有一个<code>index.html</code>文件，也就是默认主题的首页。里面的内容都是octopress源码编译之后生成的目标文件，</em>deploy 目录被当做master分支，请注意，在github中创建的<code>username/username.github.io</code>仓库中也有一个默认称为master 的分支，octopress仓库中除了<em>deploy 目录外，其它都被octopress当做source 分支，关于git技术中分支的概念，可自行查询前文git相关文档介绍。octopress的思想就是在source 分支保存整个框架所需要的文件以及写的博文<code>.markdown</code>文件，将每次生成的html文件全部放进</em>deploy目录中，再将<em>deploy目录所有的文件推送到github pages仓库中，这时便可通过<code>username.github.io</code>访问到生成好的html文件，也就是</em>deploy目录中的文件，至于其它source 分支文件，也可以推送到github中备份，此过程不影响octopress的生成效果，只是防止本地文件丢失无法恢复带来的不良后果，可执行以下代码完成source分支的备份：</p></blockquote>
 
-<pre><code>  <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p> <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
-</span><span class='line'>  $ git commit -m 'commit message'
-</span><span class='line'>  $ git push origin source</span></code></pre></td></tr></table></div></figure>
-</code></pre>
+</span><span class='line'> $ git commit -m &lsquo;commit message&rsquo;
+</span><span class='line'> $ git push origin source</span></code></pre></td></tr></table></div></figure></p>
 
 <blockquote><p>另外，rake generate 做的实质是把octopress框架生成的文件放进octopress/public 文件夹中，rake deploy 做的实质是将octopress/public 中的文件拷贝到octopress/_deploy 文件夹中并将其中的文件推送到username.github.io 仓库中。</p></blockquote>
 
