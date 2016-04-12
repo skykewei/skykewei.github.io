@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ceph | Lanyue's Blog]]></title>
+  <link href="http://llanyue.top/blog/categories/ceph/atom.xml" rel="self"/>
+  <link href="http://llanyue.top/"/>
+  <updated>2016-04-11T19:17:58-07:00</updated>
+  <id>http://llanyue.top/</id>
+  <author>
+    <name><![CDATA[lanyue]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ceph Jewel 功能预览 : 即将到来的新存储BlueStore]]></title>
+    <link href="http://llanyue.top/blog/2016/04/10/ceph-a-new-store-is-coming/"/>
+    <updated>2016-04-10T05:06:32-07:00</updated>
+    <id>http://llanyue.top/blog/2016/04/10/ceph-a-new-store-is-coming</id>
+    <content type="html"><![CDATA[<p><em>本文由 Ceph中国社区-文殊 翻译，校稿 。</em></p>
+
+<p>英文出处：<a href="http://www.sebastien-han.fr/blog/2016/03/21/ceph-a-new-store-is-coming/">Ceph Jewel Preview: A New Store Is Coming, BlueStore</a></p>
+
+<p>欢迎加入 <a href="http://7xj5dz.com1.z0.glb.clouddn.com/qun.png">翻译小组</a></p>
+
+<!--more-->
+
+
+<hr />
+
+<p><img src="http://sebastien-han.fr/images/ceph-blue-store.jpg" alt="" /></p>
+
+<p>BlueStore是一种高效的对象存储技术。</p>
+
+<p>正如以前文章中提到的那样，关于Ceph的技术正在突飞猛进的发展，尤其是有关存储优化的技术更是如此。早在今年初，一个代号为<strong>NewStore</strong>首创项目被启动。那么它究竟是什么呢？</p>
+
+<p>NewStore项目是一种存储实现。它使用<a href="http://rocksdb.org/">RocksDB</a>存储Ceph日志，同时Ceph的真正数据对象存储在文件系统中。如今有了BlueStore技术，数据对象可以无需任何文件系统的接口而直接存储在物理块设备上。</p>
+
+<hr />
+
+<h3>I 背景阐述</h3>
+
+<p>首先来看原本的Ceph中的FileStore有什么问题呢？就像你认为的那样，Ceph存储数据对象像使用传统文件系统存储文件一样，这就是我们对FileStore基本认知。但是如果你想了解更多，请查看我之前发表的一篇文章<a href="http://octopresss.dev/blog/2013/12/02/ceph-performance-interesting-things-going-on/">穹顶之下的Ceph</a>。现在让我们一起探究BlueStore技术出现的背景。</p>
+
+<h3>I.1. 安全事务</h3>
+
+<p>Ceph是一种软件定义存储解决方案，因此Ceph的主要目标是保障你存储数据的安全。为了达到数据安全的目的，我们需要原子特性。然而很不幸，鉴于<code>O_ATOMIC</code>从来没有集成到操作系统的内核当中，目前也就没有一种文件存储系统能够提供写和更新操作的原子特性。 Btrfs拥有原子特性的事务, 这是人们为了解决上述问题作出的尝试，但事实上并不成功。</p>
+
+<p>Ceph开发者不得不探索其他的解决方案。这个解决方案就是你们非常熟悉的Ceph日志。但是写前记录日志这种技术有一个主要缺陷就是它把你的硬盘性能降低到原来的二分之一（仅当日志和OSD数据共享同一个硬盘时）。</p>
+
+<h3>I.2. 对象枚举</h3>
+
+<p>对于Ceph本身来说，在POSIX文件系统上存储数据对象效果并不理想。Ceph使用哈希技术存储数据对象，因此数据对象的名字就会非常奇特，
+比如<code>rbdudata.371e5017a72.0000000000000000__head_58D36A14__2</code> 。 对于数据清洗，数据回填，和数据恢复这样的操作，Ceph就需要检索枚举数据对象。但是POSIX对读取目录内容并有序排序没有好的处理方法。正因如此，Ceph开发者最后使用一些小技巧比如数据目录分片到子目录，之后他们才能够列出目录内容，排序并使用。但是这样做的最后结果是又引入了新的消耗。</p>
+
+<h3>II.原理剖析</h3>
+
+<p>下图是BlueStore的整体架构图。</p>
+
+<p><img src="http://sebastien-han.fr/images/ceph-bluestore.png" alt="" /></p>
+
+<p>从抽象分层角度看，BlueStore的基本组成是非常简洁的。下图是BlueStore的深层透视。</p>
+
+<p><img src="http://sebastien-han.fr/images/ceph-inside-bluestore.png" alt="" /></p>
+
+<p>正如我们从图中看到的，BlueStore有一些内部组件，从总体上看，Ceph数据对象(图中所示真正的‘数据’)是直接被写入块物理设备的。因此我们不再需要任何文件系统，BlueStoe直接使用一个原始分区。OSD附带的数据对象元数据被存储到键值数据库RocksDB中。各个分层描述如下：</p>
+
+<ul>
+<li> RocksDB， 正如前文提到的，存储预写式日志和元数据（Ceph的omap数据信息）</li>
+<li> BlueRocksEnv是与RocksDB交互的接口</li>
+<li> BlueFS是使用C++语言开发的小的文件系统，并实现了rocksdb::Env 接口(存储RocksDB日志和sst文件)。因为rocksdb常规来说是运行在文件系统的顶层，下面是BlueFS。 它是数据存储后端层，RocksDB的数据和BlueStore中的真正数据被存储在同一个块物理设备。</li>
+</ul>
+
+
+<p>那么我们使用RocksDB存储什么呢？</p>
+
+<ul>
+<li> 数据对象元数据</li>
+<li> 预写式日志</li>
+<li> Ceph的omap数据信息</li>
+<li> 分配器的元数据，分配器负责决定真正的数据应在什么地方存储。同时需要注意的是分配器是可插拔的。</li>
+</ul>
+
+
+<p>现在让我们看一下BlueStore在物理硬盘上的存储模型：</p>
+
+<p><img src="http://sebastien-han.fr/images/bluestore-on-disk.png" alt="" /></p>
+
+<p>总体上看，我们是把一个硬盘分了两个分区：</p>
+
+<ul>
+<li>第一个迷你小分区使用了XFS或ext4文件系统。它存储了Ceph文件（像初始系统描述符，状态，id，fsid，钥匙串等），和RocksDB文件(RocksDB元数据和预写式日志)。</li>
+<li>第二个分区是没有文件系统的原始分区。</li>
+</ul>
+
+
+<p>BlueStore更深层次的存储模型为：</p>
+
+<p><img src="http://sebastien-han.fr/images/bluestore-on-disk-advanced.png" alt="" /></p>
+
+<p>BlueStore最令人惊叹的是它的灵活性。每一个组件都可以存储在一个不同的物理设备上。在这张图中，RocksDB的预写式日志和数据可以被存储在不同的物理设备也可以存储在迷你小分区上。</p>
+
+<h3>III.关键特性</h3>
+
+<p> 最后总结一下，重点总结BlueStore中的几个最棒的特性：</p>
+
+<ul>
+<li> 不再有双倍写入的消耗，因为它首先在块物理上写入数据，然后更新RocksDB的数据对象的元数据，元数据详细说明了驱动设备中的数据对象的位置。</li>
+<li> 配置灵活：BlueStore最多可以同时使用3个驱动设备，一个存储数据，一个存储RocksDB的元数据，一个存储RocksDB的预写式日志。因此你可以把HDD配置为存储数据，SSD配置为存储RocksDB元数据和一个非易失内存存储RocksDB的预写式日志。</li>
+<li> 原始快物理设备的使用：由于我们数据写入到块物理设备中，没有了写入传统文件系统的额外消耗。同时我们也避免了日志元数据的冗余存储占用，因为传统文件系统有他们自己内部的日志和元数据管理机制。</li>
+</ul>
+
+
+<blockquote><p><em>Ceph Jewel版本一经发布，我们就可以使用Ceph中的BlueStore。 如果我没有搞错的话，BlueStore虽然可用但它是个技术预览版本，我无法肯定我们是否应该在生产环境中使用。为了确认这件事还请仔细阅读它的发布日志。 正如我们所看到的，Ceph在存储驱动方面投入了越来越多的精力。BlueStore使用RocksDB存储日志从而不再需要预写式日志。我还没有对BlueStore做任何基准测试，但是我们定将不再需要专门的存储设备来存储日志。这对于数据中心的管理角度来看无疑极具吸引力。每一个OSD都是独立的，因此它可以由一个服务器上非常简单的迁移到另一个服务器上并可顺利运行。这个特性并不新鲜，如果我没有记错的话，这个特性是在Ceph的Firefly版本在udev系统规则下就被引入的，简单来说，就是当你热插拔系统中的一个新的包含一个OSD的硬盘时，这将触发一个udev事件，该事件将会激活这个OSD。考虑到无需使用专门的设备存储Ceph的日志，依据你的集群的不同目标BlueStore在不同程度上增强了这个特性。无论在同样的存储设备上运行什么，BlueStore的性能至少对成本容量比和吞吐量优化足够。</em></p></blockquote>
+]]></content>
+  </entry>
+  
+</feed>
