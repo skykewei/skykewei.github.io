@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://llanyue.top/sitemap.xml 
+Sitemap: http://skykewei.github.io/sitemap.xml 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Ceph | Lanyue's Blog]]></title>
-  <link href="http://llanyue.top/blog/categories/ceph/atom.xml" rel="self"/>
-  <link href="http://llanyue.top/"/>
-  <updated>2016-04-11T19:17:58-07:00</updated>
-  <id>http://llanyue.top/</id>
+  <title><![CDATA[Category: Ceph | Kewei's Blog]]></title>
+  <link href="http://skykewei.github.io/blog/categories/ceph/atom.xml" rel="self"/>
+  <link href="http://skykewei.github.io/"/>
+  <updated>2016-04-11T19:22:31-07:00</updated>
+  <id>http://skykewei.github.io/</id>
   <author>
-    <name><![CDATA[lanyue]]></name>
+    <name><![CDATA[Kewei]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Ceph Jewel 功能预览 : 即将到来的新存储BlueStore]]></title>
-    <link href="http://llanyue.top/blog/2016/04/10/ceph-a-new-store-is-coming/"/>
+    <link href="http://skykewei.github.io/blog/2016/04/10/ceph-a-new-store-is-coming/"/>
     <updated>2016-04-10T05:06:32-07:00</updated>
-    <id>http://llanyue.top/blog/2016/04/10/ceph-a-new-store-is-coming</id>
+    <id>http://skykewei.github.io/blog/2016/04/10/ceph-a-new-store-is-coming</id>
     <content type="html"><![CDATA[<p><em>本文由 Ceph中国社区-文殊 翻译，校稿 。</em></p>
 
 <p>英文出处：<a href="http://www.sebastien-han.fr/blog/2016/03/21/ceph-a-new-store-is-coming/">Ceph Jewel Preview: A New Store Is Coming, BlueStore</a></p>
