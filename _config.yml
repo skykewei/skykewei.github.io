@@ -2,13 +2,16 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://skykewei.github.io
+url: http://skykewei.top
 #url: http://llanyue.top
 title: WenShu's Blog
 subtitle: River Flows In You.
 author: WenShu
 simple_search: https://www.google.com/search
 description: for WenShu
+
+#share
+bshare: true
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
