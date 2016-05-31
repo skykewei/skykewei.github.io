@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://skykewei.top/blog/2016/05/31/go-concurrency/</loc>
+<lastmod>2016-05-31T19:59:21+08:00</lastmod>
+</url>
+<url>
 <loc>http://skykewei.top/blog/2016/04/12/octopress-ubuntu14-dot-04-tutorial/</loc>
 <lastmod>2016-04-12T22:05:23+08:00</lastmod>
 </url>
@@ -29,5 +33,8 @@
 </url>
 <url>
 <loc>http://skykewei.top/blog/categories/web/</loc>
+</url>
+<url>
+<loc>http://skykewei.top/blog/categories/go/</loc>
 </url>
 </urlset>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Web | WenShu's Blog]]></title>
   <link href="http://skykewei.top/blog/categories/web/atom.xml" rel="self"/>
   <link href="http://skykewei.top/"/>
-  <updated>2016-04-12T23:46:34+08:00</updated>
+  <updated>2016-05-31T20:18:52+08:00</updated>
   <id>http://skykewei.top/</id>
   <author>
     <name><![CDATA[WenShu]]></name>
@@ -74,30 +74,23 @@
 
 <p>为了安装Ruby，我们使用<a href="https://rvm.io/">Ruby Version Manager</a> (RVM),使用RVM你可以同时安装多个版本的Ruby，可以在不同版本之间非常容易的进行切换。安装Ruby在命令终端输入：</p>
 
-<p><figure class='code'><figcaption><span>安装RVM　</span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ curl -L &lt;a href="https://get.rvm.io">https://get.rvm.io&lt;/a> | bash -s stable &ndash;ruby
-</span><span class='line'>$ #重启 shell
-</span><span class='line'>$ source ~/.rvm/scipts/rvm #实际安装时具体路径可能不同，在命令输出中会有提示，以实际命令输出为准
-</span><span class='line'>$ #检查RVM是否安装成功
-</span><span class='line'>$ rvm -v
-</span><span class='line'>$ #检查Ruby是否安装成功
-</span><span class='line'>$ ruby -v</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock 安装RVM　%}
+$ curl -L <a href="https://get.rvm.io">https://get.rvm.io</a> | bash -s stable &ndash;ruby
+$ #重启 shell
+$ source ~/.rvm/scipts/rvm #实际安装时具体路径可能不同，在命令输出中会有提示，以实际命令输出为准
+$ #检查RVM是否安装成功
+$ rvm -v
+$ #检查Ruby是否安装成功
+$ ruby -v
+{% endcodeblock %}</p>
 
 <p>如果rvm安装过程中，没有同时安装ruby，可以手动安装</p>
 
-<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm install 2.3.0
-</span><span class='line'>$ rvm use 2.3.0
-</span><span class='line'>$ rvm rubygems latest</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock %}
+$ rvm install 2.3.0
+$ rvm use 2.3.0
+$ rvm rubygems latest
+{% endcodeblock %}</p>
 
 <p>此时，ruby环境安装完成。</p>
 
@@ -180,12 +173,11 @@ $ rake deploy
 
 <blockquote><p>再说说两者之间绑定的原理，在执行<code>rake setup_github_pages</code>命令之后，octopress文件夹中会多一个<em>deploy 目录，在你未修改任何与octopress相关主题或者增加博文之前，里面只有一个<code>index.html</code>文件，也就是默认主题的首页。里面的内容都是octopress源码编译之后生成的目标文件，</em>deploy 目录被当做master分支，请注意，在github中创建的<code>username/username.github.io</code>仓库中也有一个默认称为master 的分支，octopress仓库中除了<em>deploy 目录外，其它都被octopress当做source 分支，关于git技术中分支的概念，可自行查询前文git相关文档介绍。octopress的思想就是在source 分支保存整个框架所需要的文件以及写的博文<code>.markdown</code>文件，将每次生成的html文件全部放进</em>deploy目录中，再将<em>deploy目录所有的文件推送到github pages仓库中，这时便可通过<code>username.github.io</code>访问到生成好的html文件，也就是</em>deploy目录中的文件，至于其它source 分支文件，也可以推送到github中备份，此过程不影响octopress的生成效果，只是防止本地文件丢失无法恢复带来的不良后果，可执行以下代码完成source分支的备份：</p></blockquote>
 
-<p> <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
-</span><span class='line'> $ git commit -m &lsquo;commit message&rsquo;
-</span><span class='line'> $ git push origin source</span></code></pre></td></tr></table></div></figure></p>
+<p> {% codeblock %}
+ $ git add .
+ $ git commit -m &lsquo;commit message&rsquo;
+ $ git push origin source
+ {% endcodeblock %}</p>
 
 <blockquote><p>另外，rake generate 做的实质是把octopress框架生成的文件放进octopress/public 文件夹中，rake deploy 做的实质是将octopress/public 中的文件拷贝到octopress/_deploy 文件夹中并将其中的文件推送到username.github.io 仓库中。</p></blockquote>
 
@@ -215,12 +207,11 @@ $ rake deploy
 
 <p>此时你的远程Github Pages仓库是没有你的本地octopress所有源代码的，如果你的本地电脑因为不当操作造成octopress源文件的损坏，很可能就会无法继续发布博文了，保险起见，执行如下命令把octopress所有的源文件推送到远程仓库中,在octopress目录下</p>
 
-<p> <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
-</span><span class='line'> $ git commit -m &lsquo;commit message&rsquo;
-</span><span class='line'> $ git push -u origin source</span></code></pre></td></tr></table></div></figure></p>
+<p> {% codeblock %}
+ $ git add .
+ $ git commit -m &lsquo;commit message&rsquo;
+ $ git push -u origin source
+ {% endcodeblock %}</p>
 
 <h2>换台电脑继续写博客</h2>
 
@@ -230,12 +221,11 @@ $ rake deploy
 
 <p>2 执行下面命令：</p>
 
-<p> <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone git@github.com:yourname/yourname.github.io.git
-</span><span class='line'> $ cd yourname.github.io
-</span><span class='line'> $ git checkout source</span></code></pre></td></tr></table></div></figure></p>
+<p> {% codeblock %}
+ $ git clone git@github.com:yourname/yourname.github.io.git
+ $ cd yourname.github.io
+ $ git checkout source
+ {% endcodeblock %}</p>
 
 <p>  之后就可以像前文操作一样发布博文了。</p>
 

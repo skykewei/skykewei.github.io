@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Go | WenShu's Blog]]></title>
+  <link href="http://skykewei.top/blog/categories/go/atom.xml" rel="self"/>
+  <link href="http://skykewei.top/"/>
+  <updated>2016-05-31T20:18:52+08:00</updated>
+  <id>http://skykewei.top/</id>
+  <author>
+    <name><![CDATA[WenShu]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Go 并发]]></title>
+    <link href="http://skykewei.top/blog/2016/05/31/go-concurrency/"/>
+    <updated>2016-05-31T19:59:21+08:00</updated>
+    <id>http://skykewei.top/blog/2016/05/31/go-concurrency</id>
+    <content type="html"><![CDATA[<p>Go并发是以协程(goroutine)为基础的，那么问题来了。
+协程是什么？与线程有什么区别联系？Go为什么选择协程而不是线程？</p>
+
+<h2>协程是什么</h2>
+
+<p>在Go中，你可以使用<code>go f()</code> 发起一个协程。其中<code>f()</code>是Go中的func调用。所以个人认为Go中的协程是一个“函数调用”，是一个执行线。多个“函数调用”之间是并发的关系。</p>
+
+<!--more-->
+
+
+<h2>协程与线程区别和联系</h2>
+
+<p>不管Go使用什么机制支持并发，但是最终需要拿到底层OS去调用执行，OS才是最终的Go并发的执行者，而我们又知道OS并发靠的是各种process和thread，所以我们可以很自然的想到Go的协程和底层OS的thread或者process直接有一种映射关系。</p>
+
+<p>没错，我们正在进一步接近真相，Go中把协程映射到一组线程上去执行。也就是说多个协程被安排由一个线程去执行。如果熟悉OS调用的童鞋就会知道，进程是OS分配系统资源的基本单位，线程是OS执行调用的基本单位。进程切换和线程切换都需要一定的负载。</p>
+
+<p>Go多个协程由单个线程去执行，但同时又要保证多个协程的并发特性，这是如何做到的？</p>
+
+<p>Go中使用一种叫做<code>segmented stacks</code>的技术做到的，这门技术以后再详谈。</p>
+
+<p>那么当某个协程因为某种原因(I/O调用或者其他阻塞的系统调用)被阻塞的时候，执行该协程的线程会如何做？</p>
+
+<p>执行该协程的线程同样被阻塞，此时的线程是无法继续执行分配到它身上的其他协程了，Go的运行环境会把其他协程调度到其他没有被阻塞的线程中。这样就保障了协程之间的并发性。</p>
+
+<h2>Go为什么选择协程而不是线程？</h2>
+
+<p>我们都知道OS中进程切换和线程切换都会有开销，一般来说，一个进行能够拥有上千个线程,具体多少是受到OS的资源限制的。众所周知，线程之所以出现是因为要解决进行切换开销过大并提高并发性。那么协程在线程之后出现，也是有解决线程切换开销和提高并发性的原因。在同等的资源环境下，可以创建成千上万个协程，但线程也就创建数千个。平均下来，协程切换只需要CPU的3个轻量级指令。</p>
+
+<h1>参考链接</h1>
+
+<p><a href="https://golang.org/doc/faq#goroutines">https://golang.org/doc/faq#goroutines</a></p>
+
+<p><a href="https://golang.org/doc/faq#How_is_the_run_time_support_implemented">https://golang.org/doc/faq#How_is_the_run_time_support_implemented</a></p>
+
+<p>ps.上面两个链接目前都需要科学上网，是Go的官方网站</p>
+]]></content>
+  </entry>
+  
+</feed>
