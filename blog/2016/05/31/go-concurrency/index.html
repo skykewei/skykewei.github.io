@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>WenShu's Blog</title>
+  <title>Go 并发 - WenShu's Blog</title>
   <meta name="author" content="WenShu">
 
   
-  <meta name="description" content="for llanyue">
-  <meta name="keywords" content="PM,IT">
+  <meta name="description" content="Go并发是以协程(goroutine)为基础的，那么问题来了。
+协程是什么？与线程有什么区别联系？Go为什么选择协程而不是线程？ 协程是什么 在Go中，你可以使用go f() 发起一个协程。其中f()是Go中的func调用。所以个人认为Go中的协程是一个“函数调用”，是一个执行线。多个“函数调用” &hellip;">
+  
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://skykewei.top/">
+  <link rel="canonical" href="http://skykewei.top/blog/2016/05/31/go-concurrency/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="WenShu's Blog" type="application/atom+xml">
@@ -75,15 +76,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/05/31/go-concurrency/">Go 并发</a></h1>
+      <h1 class="entry-title">Go 并发</h1>
     
     
       <p class="meta">
@@ -99,143 +97,100 @@
   </header>
 
 
-  <div class="entry-content"><p>Go并发是以协程(goroutine)为基础的，那么问题来了。
+<div class="entry-content"><p>Go并发是以协程(goroutine)为基础的，那么问题来了。
 协程是什么？与线程有什么区别联系？Go为什么选择协程而不是线程？</p>
 
 <h2>协程是什么</h2>
 
 <p>在Go中，你可以使用<code>go f()</code> 发起一个协程。其中<code>f()</code>是Go中的func调用。所以个人认为Go中的协程是一个“函数调用”，是一个执行线。多个“函数调用”之间是并发的关系。</p>
 
+<!--more-->
+
+
+<h2>协程与线程区别和联系</h2>
+
+<p>不管Go使用什么机制支持并发，但是最终需要拿到底层OS去调用执行，OS才是最终的Go并发的执行者，而我们又知道OS并发靠的是各种process和thread，所以我们可以很自然的想到Go的协程和底层OS的thread或者process直接有一种映射关系。</p>
+
+<p>没错，我们正在进一步接近真相，Go中把协程映射到一组线程上去执行。也就是说多个协程被安排由一个线程去执行。如果熟悉OS调用的童鞋就会知道，进程是OS分配系统资源的基本单位，线程是OS执行调用的基本单位。进程切换和线程切换都需要一定的负载。</p>
+
+<p>Go多个协程由单个线程去执行，但同时又要保证多个协程的并发特性，这是如何做到的？</p>
+
+<p>Go中使用一种叫做<code>segmented stacks</code>的技术做到的，这门技术以后再详谈。</p>
+
+<p>那么当某个协程因为某种原因(I/O调用或者其他阻塞的系统调用)被阻塞的时候，执行该协程的线程会如何做？</p>
+
+<p>执行该协程的线程同样被阻塞，此时的线程是无法继续执行分配到它身上的其他协程了，Go的运行环境会把其他协程调度到其他没有被阻塞的线程中。这样就保障了协程之间的并发性。</p>
+
+<h2>Go为什么选择协程而不是线程？</h2>
+
+<p>我们都知道OS中进程切换和线程切换都会有开销，一般来说，一个进行能够拥有上千个线程,具体多少是受到OS的资源限制的。众所周知，线程之所以出现是因为要解决进行切换开销过大并提高并发性。那么协程在线程之后出现，也是有解决线程切换开销和提高并发性的原因。在同等的资源环境下，可以创建成千上万个协程，但线程也就创建数千个。平均下来，协程切换只需要CPU的3个轻量级指令。</p>
+
+<h1>参考链接</h1>
+
+<p><a href="https://golang.org/doc/faq#goroutines">https://golang.org/doc/faq#goroutines</a></p>
+
+<p><a href="https://golang.org/doc/faq#How_is_the_run_time_support_implemented">https://golang.org/doc/faq#How_is_the_run_time_support_implemented</a></p>
+
+<p>ps.上面两个链接目前都需要科学上网，是Go的官方网站</p>
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/05/31/go-concurrency/">Read on &rarr;</a>
-    </footer>
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/04/12/octopress-ubuntu14-dot-04-tutorial/">像黑客一样写blog：Ubuntu14.04+Octopress+Github Pages</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2016-04-12T22:05:23+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:05 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>之前在windows 10 上部署了一套Octopress环境，但是如果要发布博客，就只有在安装了Octopress环境才能发布blog.因为就有了这篇写在Ubuntu14.04系统中的文章。与在windows上安装有些不同，有些需要注意的问题，在这篇文章会指出这些问题，并给出解决办法。希望此篇文章能够为有意在Ubuntu14.04上安装Octopress环境的童鞋提供一个参考操作步骤。如有不准确的地方，还请批评指正。</p>
-
-<blockquote><ul>
-<li><strong><em>基本工具介绍</em></strong></li>
-<li><strong><em>安装依赖</em></strong></li>
-<li><strong><em>安装Octopress</em></strong></li>
-<li><strong><em>发布Github Pages</em></strong></li>
-<li><strong><em>绑定私有域名</em></strong></li>
-<li><strong><em>发布第一篇Blog</em></strong></li>
-<li><strong><em>换台电脑继续写博客</em></strong></li>
-<li><strong><em>参考链接</em></strong></li>
-</ul>
-</blockquote>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/04/12/octopress-ubuntu14-dot-04-tutorial/">Read on &rarr;</a>
-    </footer>
   
 
+<span class="byline author vcard">Posted by <span class="fn">WenShu</span></span>
 
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/04/10/ceph-a-new-store-is-coming/">Ceph Jewel 功能预览 : 即将到来的新存储BlueStore</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
 
-<time class='entry-date' datetime='2016-04-10T20:06:32+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>8:06 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><em>本文由 Ceph中国社区-文殊 翻译，校稿 。</em></p>
-
-<p>英文出处：<a href="http://www.sebastien-han.fr/blog/2016/03/21/ceph-a-new-store-is-coming/">Ceph Jewel Preview: A New Store Is Coming, BlueStore</a></p>
-
-<p>欢迎加入 <a href="http://7xj5dz.com1.z0.glb.clouddn.com/qun.png">翻译小组</a></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/04/10/ceph-a-new-store-is-coming/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
+<time class='entry-date' datetime='2016-05-31T19:59:21+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>7:59 pm</span></time>
       
-  <header>
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/go/'>go</a>
+  
+</span>
+
+
+    </p>
     
-      <h1 class="entry-title"><a href="/blog/2016/04/10/helloworld/">我的第一篇Octoperss博客</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2016-04-10T16:05:42+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>4:05 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This is my first article!</p>
+      <div class="sharing">
+  
+  
+  
+ 
 </div>
-  
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
+ <div class="bshare-custom">
+  	<a title="qzone" class="bshare-qzone"></a>
+  	<a title="sina" class="bshare-sinaminiblog"></a>
+  	<a title="renren" class="bshare-renren"></a>
+  	<a title="qqmb" class="bshare-qqmb"></a>
+  	<a title="neteasemb" class="bshare-neteasemb"></a>
+  	<a title="addthis" class="bshare-more bshare-more-icon more-style-addthis"></a>
+  	<span class="BSHARE_COUNT bshare-share-count">0</span>
   </div>
+  <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh">	
+  </script>
+  <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js">
+  </script>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/04/12/octopress-ubuntu14-dot-04-tutorial/" title="Previous Post: 像黑客一样写blog：Ubuntu14.04+Octopress+Github Pages">&laquo; 像黑客一样写blog：Ubuntu14.04+Octopress+Github Pages</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
 </div>
+
 <aside class="sidebar">
   
     <section>
@@ -294,6 +249,7 @@
 
   
 </aside>
+
 
     </div>
   </div>
