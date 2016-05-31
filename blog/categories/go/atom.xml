@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Go | WenShu's Blog]]></title>
   <link href="http://skykewei.top/blog/categories/go/atom.xml" rel="self"/>
   <link href="http://skykewei.top/"/>
-  <updated>2016-05-31T20:37:02+08:00</updated>
+  <updated>2016-05-31T20:40:12+08:00</updated>
   <id>http://skykewei.top/</id>
   <author>
     <name><![CDATA[WenShu]]></name>
@@ -30,7 +30,7 @@
 
 <h2>协程与线程区别和联系</h2>
 
-<p>不管Go使用什么机制支持并发，但是最终需要拿到底层OS去调用执行，OS才是最终的Go并发的执行者，而我们又知道OS并发靠的是各种process和thread，所以我们可以很自然的想到Go的协程和底层OS的thread或者process直接有一种映射关系。</p>
+<p>不管Go使用什么机制支持并发，但是最终需要拿到底层OS去调用执行，OS才是最终的Go并发的执行者，而我们又知道OS并发靠的是各种process和thread，所以我们可以很自然的想到Go的协程和底层OS的thread或者process之间有一种映射关系。</p>
 
 <p>没错，我们正在进一步接近真相，Go中把协程映射到一组线程上去执行。也就是说多个协程被安排由一个线程去执行。如果熟悉OS调用的童鞋就会知道，进程是OS分配系统资源的基本单位，线程是OS执行调用的基本单位。进程切换和线程切换都需要一定的负载。</p>
 
