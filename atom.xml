@@ -4,7 +4,7 @@
   <title><![CDATA[WenShu's Blog]]></title>
   <link href="http://skykewei.top/atom.xml" rel="self"/>
   <link href="http://skykewei.top/"/>
-  <updated>2016-05-31T20:40:12+08:00</updated>
+  <updated>2016-06-11T23:04:19+08:00</updated>
   <id>http://skykewei.top/</id>
   <author>
     <name><![CDATA[WenShu]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Go和Java的异同]]></title>
+    <link href="http://skykewei.top/blog/2016/06/11/go-vs-java/"/>
+    <updated>2016-06-11T23:01:28+08:00</updated>
+    <id>http://skykewei.top/blog/2016/06/11/go-vs-java</id>
+    <content type="html"><![CDATA[<p>Rob said：<a href="https://commandcenter.blogspot.com/2012/06/less-is-exponentially-more.html">&ldquo;Go was designed to help write big programs, written and maintained by big teams.&rdquo;</a></p>
+
+<h2>相同点</h2>
+
+<p><strong>1 命令式编程语言</strong></p>
+
+<p>   Go和Java都是属于命令式编程语言，与函数式编程语言相区别。我们熟知的著名的编程语言C/C++都是属于命令式编程语言的范畴，<a href="https://en.wikipedia.org/wiki/Functional_programming">函数式编程</a>语言Erlang非常具有代表性，历史也比较悠久。</p>
+
+<p><strong>2 静态类型</strong></p>
+
+<p>   Go和Java都是静态类型语言，就是说变量或者方法的类型在编译时期就可以判断和检查。静态类型和动态类型语言相对于，可以在编译期就可以做类型检查的都是静态类型语言，而动态类型语言却需要等到运行时才可以做类型判断。C/C++,C#都是静态类型，动态类型语言我们也非常熟悉，JavaScript，Ruby和Python都是典型的动态语言。</p>
+
+<p>   静态类型语言主要优点在于在编译期可以做类型检查，可以在运行之前发现bug，便于调试。</p>
+
+<p><strong>3 垃圾回收</strong></p>
+
+<p>   垃圾回收是指Go和Java都有自己的内存垃圾回收器，这一点我们非常容易理解。垃圾回收器是runtime的一部分。</p>
+
+<p>   在这里多扯一点是Java的runtime是用C语言写的，而Go语言在go1.5之前的版本也是使用C语言写的，但自从go1.5之后，go语言不仅使用Go重写了runtime，而且编译器、链接器和汇编器也是使用Go进行了重构，其中编译器和链接器根据Go的创始人大神Rob说是由他们写的程序转换工具，把原来使用C写的编译器转换成Go语言写的程序，然后编译各种优化而成，其中过程非常复杂，非常难。汇编器是由Rob大神使用Go重写的。至于为什么选择转换而不是由Go重新写，Rob回答说是为了保证正确性和便于测试。</p>
+
+<p><strong>4 内存安全</strong></p>
+
+<p>   这里说的内存安全是说Go和Java在运行时都有引用nil(Go)和null(Java)检查和访问越界检查，我们在Java程序中可以看到NullPointerException和ArrayIndexOutOfBoundsException最常见的两种异常。</p>
+
+<p><strong>5 变量总是初始化</strong></p>
+
+<p>   Go程序中的不管是使用什么方式声明的变量都是被zero化的，也就是说，如果变量是数值它的值就是0，如果是指针就是nil，如果是bool它的值就是false，这个与Java类定义的类成员变量的初始化时一致的，但是Java方法中定义的变量并不遵循这一规则。</p>
+
+<p><strong>6 方法</strong>
+   Go和Java都有方法的概念。Java中的方法就是我们所熟知的类中的方法的概念。Go中的方法是拥有接收者的特殊函数。因为Go中还有像C语言中的function的概念。所以Go中func和method是做了区分的。</p>
+
+<p><strong>7 接口</strong></p>
+
+<p>  Go中的interface和Java中的interface，都可以起到相似的作用，实际上各自有微妙的不同。</p>
+
+<p><strong>8 类型断言</strong></p>
+
+<p>  在运行时Go可以使用Value.(Type)判断某个Value是否是类型Type的，
+  Java可以使用instance of 来达到相似目的。</p>
+
+<p><strong>9 反射</strong></p>
+
+<p>  Go和Java都拥有反射机制。在运行时可以获取变量的数据结构。</p>
+
+<h2>不同点</h2>
+
+<p><strong>1</strong> Go编译生成的是机器代码，而Java编译后生成的是字节码，Go并没有虚拟机。</p>
+
+<p><strong>2</strong> Go编译时静态链接库的。</p>
+
+<p><strong>3</strong> Go拥有类型为function的变量。拥有函数闭包</p>
+
+<p><strong>4</strong> Go的string是内置的，和int float在同一个级别上，而Java的string是建立在其他类型基础之上的。</p>
+
+<p><strong>5</strong> Go的arrays map 和slice都是内置的</p>
+
+<p><strong>6</strong> 最后一点也是最重要的一点是，Go内置支持并发。关于Go并发，可以参考我的另一篇博文<a href="http://skykewei.top/blog/2016/05/31/go-concurrency/">Go 并发</a></p>
+
+<h2>Go有意不支持的Java中类似特性</h2>
+
+<p><strong>1 没有类的概念</strong></p>
+
+<p>  Go中是没有type system的，也就没有像面向对象语言中的类，子类，继承，重载，多态的概念。创始人解释说Go的设计哲学是使用最少的语言特性去支持更多的功能。参见Rob大神的<a href="https://commandcenter.blogspot.com/2012/06/less-is-exponentially-more.html">Less is exponentially more</a></p>
+
+<p><strong>2 没有继承机制</strong></p>
+
+<p>  理由同上</p>
+
+<p><strong>3 没有构造器</strong></p>
+
+<p>  Go中的用户定义的数据结构主要是struct类似C中的struct。没有Java中类的构造器的概念，但是Go在声明一个struct变量时，可以使用composite literal达到类似的目的。</p>
+
+<p><strong>4 没有final关键字</strong></p>
+
+<p>  Go中有const的关键字，这里的const和我们熟知的又有所不同，功能更加强大。参见<a href="https://blog.golang.org/constants">Constants</a></p>
+
+<p><strong>5 没有异常</strong></p>
+
+<p>  Go中有err变量用于检测函数中可能出现的错误，程序员需要检查函数返回的err来处理。之所以没有引进异常机制，Go作出解释的其中一个原因是说写try-catch-finally代码非常的丑，极大的影响可读性，代码的可读性在Go的设计中占有非常重要的地位。同时表示在并不致命的异常发生时，程序没有处理的情况下并不应该退出程序。</p>
+
+<p><strong>6 没有注解</strong></p>
+
+<p>  没有Java中的annotation，我们知道著名的Java框架spring，hibernate等大量运用了annotation特性。在Java语言中是非常有用的。</p>
+
+<p><strong>7 没有用户定义的泛型</strong></p>
+
+<p>  Go也是有泛型的运用的。内置的map就是典型的泛型数据结构。之所以不容程序员去定义自己的泛型，是因为没有必要去引进不必要的复杂的特性，可以使用其他特性组合达到类似的目的</p>
+
+<p><strong>参考链接</strong></p>
+
+<p><a href="http://commandcenter.blogspot.com/2012/06/less-is-exponentially-more.html">Less is exponentially more (Pike, 2012)</a></p>
+
+<p><a href="http://talks.golang.org/2012/splash.article">Go at Google: Language Design in the Service of Software Engineering (Pike, 2012)</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Go 并发]]></title>
@@ -402,15 +503,6 @@ $ rake deploy
 
 
 <blockquote><p><em>Ceph Jewel版本一经发布，我们就可以使用Ceph中的BlueStore。 如果我没有搞错的话，BlueStore虽然可用但它是个技术预览版本，我无法肯定我们是否应该在生产环境中使用。为了确认这件事还请仔细阅读它的发布日志。 正如我们所看到的，Ceph在存储驱动方面投入了越来越多的精力。BlueStore使用RocksDB存储日志从而不再需要预写式日志。我还没有对BlueStore做任何基准测试，但是我们定将不再需要专门的存储设备来存储日志。这对于数据中心的管理角度来看无疑极具吸引力。每一个OSD都是独立的，因此它可以由一个服务器上非常简单的迁移到另一个服务器上并可顺利运行。这个特性并不新鲜，如果我没有记错的话，这个特性是在Ceph的Firefly版本在udev系统规则下就被引入的，简单来说，就是当你热插拔系统中的一个新的包含一个OSD的硬盘时，这将触发一个udev事件，该事件将会激活这个OSD。考虑到无需使用专门的设备存储Ceph的日志，依据你的集群的不同目标BlueStore在不同程度上增强了这个特性。无论在同样的存储设备上运行什么，BlueStore的性能至少对成本容量比和吞吐量优化足够。</em></p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[我的第一篇Octoperss博客]]></title>
-    <link href="http://skykewei.top/blog/2016/04/10/helloworld/"/>
-    <updated>2016-04-10T16:05:42+08:00</updated>
-    <id>http://skykewei.top/blog/2016/04/10/helloworld</id>
-    <content type="html"><![CDATA[<p>This is my first article!</p>
 ]]></content>
   </entry>
   

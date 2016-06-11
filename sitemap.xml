@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://skykewei.top/blog/2016/06/11/go-vs-java/</loc>
+<lastmod>2016-06-11T23:01:28+08:00</lastmod>
+</url>
+<url>
 <loc>http://skykewei.top/blog/2016/05/31/go-concurrency/</loc>
 <lastmod>2016-05-31T19:59:21+08:00</lastmod>
 </url>
@@ -13,10 +17,6 @@
 <lastmod>2016-04-10T20:06:32+08:00</lastmod>
 </url>
 <url>
-<loc>http://skykewei.top/blog/2016/04/10/helloworld/</loc>
-<lastmod>2016-04-10T16:05:42+08:00</lastmod>
-</url>
-<url>
 <loc>http://skykewei.top/blog/archives/</loc>
 </url>
 <url>
@@ -24,9 +24,6 @@
 </url>
 <url>
 <loc>http://skykewei.top/about/</loc>
-</url>
-<url>
-<loc>http://skykewei.top/blog/categories/test/</loc>
 </url>
 <url>
 <loc>http://skykewei.top/blog/categories/ceph/</loc>
