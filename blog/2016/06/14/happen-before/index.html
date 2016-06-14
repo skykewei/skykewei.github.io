@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>About - WenShu's Blog</title>
+  <title>Java内存模型之Happen-Before规则 - WenShu's Blog</title>
   <meta name="author" content="WenShu">
 
   
-  <meta name="description" content="About Apr 10th, 2016 7:31 pm About me. To do next. Apr 10th, 2016 7:31 pm 0 Recent Posts Java内存模型之Happen-Before规则 Go和Java的异同 Go 并发 像黑客一样写blog： &hellip;">
+  <meta name="description" content="Java内存模型是描述在并发环境中多线程之间是如何交互的。其中重要的一部分就是Happen-Before原则，具体如下： 程序顺序原则 在线程中，指令重排会保证线程内语句执行的语义上的一致性.
+注意这里说的是语义上的一致性，而不是程序语句上的一致性。 int a = 0; //语句 1
+int b &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://skykewei.top/about/">
+  <link rel="canonical" href="http://skykewei.top/blog/2016/06/14/happen-before/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="WenShu's Blog" type="application/atom+xml">
@@ -76,36 +78,127 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">About</h1>
-    <p class="meta">
-
-
-
-
-<time class='entry-date' datetime='2016-04-10T19:31:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>7:31 pm</span></time></p>
-  </header>
-  
-  <p>About me.</p>
-
-<p>To do next.</p>
-
-  
-    <footer>
+    
+      <h1 class="entry-title">Java内存模型之Happen-Before规则</h1>
+    
+    
       <p class="meta">
         
-        
 
 
 
 
-<time class='entry-date' datetime='2016-04-10T19:31:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>7:31 pm</span></time>
+<time class='entry-date' datetime='2016-06-14T19:59:54+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>7:59 pm</span></time>
         
       </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Java内存模型是描述在并发环境中多线程之间是如何交互的。其中重要的一部分就是Happen-Before原则，具体如下：</p>
+
+<h2>程序顺序原则</h2>
+
+<p>在线程中，指令重排会保证线程内语句执行的<strong>语义</strong>上的一致性.
+注意这里说的是语义上的一致性，而不是程序语句上的一致性。</p>
+
+<pre><code>int a = 0; //语句 1
+int b = 1; //语句 2
+</code></pre>
+
+<p>上面的代码块从程序语句顺序上讲，语句1在语句2前面，两条语句颠倒顺序成为下面的样子：</p>
+
+<pre><code>int b = 1; //语句 2
+int a = 0; //语句 1
+</code></pre>
+
+<!--more-->
+
+
+<p>这前后两个代码块虽然语句顺序不一致，但是在语义上是一致的，因为两个代码段执行完成后变量<code>a</code>和变量<code>b</code>的值是一致的。</p>
+
+<p>指令重排是引起一系列并发问题的重要原因。编译器的指令重排必须保证程序代码段在串行执行中的语义保持一致。</p>
+
+<p>之所以会进行指令重排主要是出于提升程序性能，提高CPU的指令吞吐量的考虑，有兴趣的可以去查阅有关资料。</p>
+
+<p>因此当编译器认为必要的时候，会对程序进行指令重排。</p>
+
+<h2>volatile原则</h2>
+
+<p>Java中用于线程间通信的volatile变量的写会先发生于volatile变量的读，由此保证volatile变量的可见性。
+同时在执行有关volatile读写语句之前，会保证在该volitile语句之前的语句全部执行完毕。</p>
+
+<pre><code>volatile boolean ok = false; // 语句 1
+int a = 0
+int b = 1
+//thread 1
+a = 2;     //语句 2
+b = 3;     //语句 3
+ok = true; //语句 4
+...
+//thread 2
+while(!ok){}  //语句 5
+System.out.println("a="+a+",b="+b); //语句 6
+</code></pre>
+
+<p>上一节中我们提到了指令重排会导致程序语句的执行顺序不一定与你写的代码语句的顺序一致。</p>
+
+<p>上面代码段若语句1中变量<code>ok</code>没有<code>volatile</code>关键字，那么线程1中的语句2、语句3、语句4执行顺序就会被打乱，语句4有可能会被安排在语句2或者语句3之前执行。那么在并发执行环境中，线程2中在语句5处检测到<code>ok==true</code>跳出循环时，语句2和语句3还未执行，变量<code>a</code>和变量<code>b</code>不一定分别为2和3. 有了<code>volatile</code>关键字，语句6输出时，一定会有<code>a=2，b=3</code>.也就是说线程1在语句4之前的所有操作结果对线程2是可见的。</p>
+
+<h2>锁规则</h2>
+
+<p>对于并发中的锁的unlock操作一定发生在锁的lock之前。</p>
+
+<h2>传递性</h2>
+
+<p>如果事件A发生在B之前，事件B发生在C之前，那么事件A一定发生在C之前</p>
+
+<h2>线程开始原则</h2>
+
+<p>Java的线程需要调用start(),方法启动。start()操作必然要在该线程的所有操作之前执行</p>
+
+<h2>线程结束原则</h2>
+
+<p>线程的所有操作都是在该线程正常结束、或者从Thread.join()调用中成功返回，或着调用Thread.isAlive返回false</p>
+
+<h2>中断原则</h2>
+
+<p>一个线程调用另一个线程的interrupt 操作先于被中断的线程发现中断(通过抛出InterruptedException或者调用isInterrupted和interrupted)</p>
+
+<h2>对象终结原则</h2>
+
+<p>一个对象的构造函数的执行完成先于这个对象的finalizer的开始</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
       
-        <div class="sharing">
+  
+
+<span class="byline author vcard">Posted by <span class="fn">WenShu</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-06-14T19:59:54+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>7:59 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/bing-fa/'>并发</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
   
   
   
@@ -125,9 +218,14 @@
   <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js">
   </script>
 
+    
+    <p class="meta">
       
-    </footer>
-  
+        <a class="basic-alignment left" href="/blog/2016/06/11/go-vs-java/" title="Previous Post: Go和Java的异同">&laquo; Go和Java的异同</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
