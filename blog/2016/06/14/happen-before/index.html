@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Java内存模型之Happen-Before规则 - WenShu's Blog</title>
+  <title>Java内存模型之Happen-Before原则 - WenShu's Blog</title>
   <meta name="author" content="WenShu">
 
   
@@ -82,7 +82,7 @@ int b &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Java内存模型之Happen-Before规则</h1>
+      <h1 class="entry-title">Java内存模型之Happen-Before原则</h1>
     
     
       <p class="meta">
@@ -148,11 +148,11 @@ System.out.println("a="+a+",b="+b); //语句 6
 
 <p>上面代码段若语句1中变量<code>ok</code>没有<code>volatile</code>关键字，那么线程1中的语句2、语句3、语句4执行顺序就会被打乱，语句4有可能会被安排在语句2或者语句3之前执行。那么在并发执行环境中，线程2中在语句5处检测到<code>ok==true</code>跳出循环时，语句2和语句3还未执行，变量<code>a</code>和变量<code>b</code>不一定分别为2和3. 有了<code>volatile</code>关键字，语句6输出时，一定会有<code>a=2，b=3</code>.也就是说线程1在语句4之前的所有操作结果对线程2是可见的。</p>
 
-<h2>锁规则</h2>
+<h2>锁原则</h2>
 
 <p>对于并发中的锁的unlock操作一定发生在锁的lock之前。</p>
 
-<h2>传递性</h2>
+<h2>传递性原则</h2>
 
 <p>如果事件A发生在B之前，事件B发生在C之前，那么事件A一定发生在C之前</p>
 
@@ -243,7 +243,7 @@ System.out.println("a="+a+",b="+b); //语句 6
       </li>
     
       <li class="post">
-        <a href="/blog/2016/06/14/happen-before/">Java内存模型之Happen-Before规则</a>
+        <a href="/blog/2016/06/14/happen-before/">Java内存模型之Happen-Before原则</a>
       </li>
     
       <li class="post">
