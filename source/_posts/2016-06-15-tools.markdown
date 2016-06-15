@@ -1,0 +1,15 @@
+---
+layout: post
+title: "实用工具"
+date: 2016-06-15 13:32:42 +0800
+comments: true
+categories: tools
+---
+
+
+- [在线工具](http://tool.oschina.net/)
+- [VisuAlgo](http://visualgo.net/)
+- [算法复杂度](http://bigocheatsheet.com/)
+- [Linux命令大全](http://man.linuxde.net/)
+- [C/C++ Reference](http://en.cppreference.com/w/)
+- [cplusplus](http://www.cplusplus.com/)

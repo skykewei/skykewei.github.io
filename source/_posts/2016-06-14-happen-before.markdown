@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Java内存模型之Happen-Before规则 "
+title: "Java内存模型之Happen-Before原则 "
 date: 2016-06-14 19:59:54 +0800
 comments: true
 categories: 并发
@@ -54,11 +54,11 @@ Java中用于线程间通信的volatile变量的写会先发生于volatile变量
   
     
 
-## 锁规则 ##
+## 锁原则 ##
 
 对于并发中的锁的unlock操作一定发生在锁的lock之前。
 
-## 传递性 ##
+## 传递性原则 ##
 
 如果事件A发生在B之前，事件B发生在C之前，那么事件A一定发生在C之前
 
