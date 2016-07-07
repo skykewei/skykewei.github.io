@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 并发 | WenShu's Blog]]></title>
   <link href="http://skykewei.top/blog/categories/bing-fa/atom.xml" rel="self"/>
   <link href="http://skykewei.top/"/>
-  <updated>2016-06-15T13:38:52+08:00</updated>
+  <updated>2016-07-07T13:31:22+08:00</updated>
   <id>http://skykewei.top/</id>
   <author>
     <name><![CDATA[WenShu]]></name>
@@ -12,6 +12,81 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java并发中的不可变对象]]></title>
+    <link href="http://skykewei.top/blog/2016/07/07/immutable-object-in-java/"/>
+    <updated>2016-07-07T13:27:32+08:00</updated>
+    <id>http://skykewei.top/blog/2016/07/07/immutable-object-in-java</id>
+    <content type="html"><![CDATA[<p>在多线程编程中，不可变对象非常有用，因为不可变对象在多线程环境共享下没有状态不一致问题，线程访问不可变对象没有加锁解锁的开销。 不可变对象的状态自从创建后就不会被改变，因为不可变对象天生具备线程安全的特性。</p>
+
+<p>在JDK中，String和Integer Long等基本类型的包装类是典型的不可变对象。</p>
+
+<h2>编写不可变对象准则</h2>
+
+<ul>
+<li>不可变对象的状态自创建后不可更改，或者使用另一个不可变对象整体替换</li>
+<li>不可变对象的所有成员变量应该是<code>final</code></li>
+<li>不可变对象不可继承，<code>final Class</code> 实现</li>
+<li>不可变对象的只设置getter方法，添加setter方法。getter返回成员变量对象引用时，返回该对象一个副本</li>
+</ul>
+
+
+<!--more-->
+
+
+<p>当然对于上边第二条也有例外，例如<code>String</code>中的成员变量</p>
+
+<pre><code>/** Cache the hash code for the string */
+private int hash; // Default to 0
+</code></pre>
+
+<p>hash就不是<code>final</code> 关键字。但是String的<code>public</code>方法能够访问hash的只有<code>hashCode()</code>方法。因为<code>value</code>是不变的，每次计算hash也是一样的。</p>
+
+<pre><code>    /** The value is used for character storage. */
+    private final char value[];
+
+    public int hashCode() {
+    int h = hash;
+    if (h == 0 &amp;&amp; value.length &gt; 0) {
+        char val[] = value;
+
+        for (int i = 0; i &lt; value.length; i++) {
+            h = 31 * h + val[i];
+        }
+        hash = h;
+    }
+    return h;
+    }
+</code></pre>
+
+<h2>简单不可变对象例子</h2>
+
+<pre><code>    public final class Person{
+
+        private final String name;
+        private final String sex;
+        private final Date birthday;
+        public Person(String name,String sex){
+            this.name = name;
+            this.sex = sex;
+        }
+
+        public String getName(){
+           return name;
+        }
+
+        public String getSex(){
+           return sex;
+        }
+
+        public Date getBirthDay(){
+           return (Date)birthday.clone();
+        }
+    }
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Java内存模型之Happen-Before原则]]></title>

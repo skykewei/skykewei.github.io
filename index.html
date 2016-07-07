@@ -83,6 +83,52 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2016/07/07/immutable-object-in-java/">Java并发中的不可变对象</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-07-07T13:27:32+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>1:27 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在多线程编程中，不可变对象非常有用，因为不可变对象在多线程环境共享下没有状态不一致问题，线程访问不可变对象没有加锁解锁的开销。 不可变对象的状态自从创建后就不会被改变，因为不可变对象天生具备线程安全的特性。</p>
+
+<p>在JDK中，String和Integer Long等基本类型的包装类是典型的不可变对象。</p>
+
+<h2>编写不可变对象准则</h2>
+
+<ul>
+<li>不可变对象的状态自创建后不可更改，或者使用另一个不可变对象整体替换</li>
+<li>不可变对象的所有成员变量应该是<code>final</code></li>
+<li>不可变对象不可继承，<code>final Class</code> 实现</li>
+<li>不可变对象的只设置getter方法，添加setter方法。getter返回成员变量对象引用时，返回该对象一个副本</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/07/07/immutable-object-in-java/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2016/06/15/tools/">实用工具</a></h1>
     
     
@@ -346,6 +392,10 @@ int a = 0; //语句 1
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/07/immutable-object-in-java/">Java并发中的不可变对象</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/15/tools/">实用工具</a>
       </li>
     
@@ -361,10 +411,6 @@ int a = 0; //语句 1
         <a href="/blog/2016/05/31/go-concurrency/">Go 并发</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2016/04/12/octopress-ubuntu14-dot-04-tutorial/">像黑客一样写blog：Ubuntu14.04+Octopress+Github Pages</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -378,7 +424,7 @@ int a = 0; //语句 1
 <li class='category'><a href='/blog/categories/go/'>go (2)</a></li>
 <li class='category'><a href='/blog/categories/tools/'>tools (1)</a></li>
 <li class='category'><a href='/blog/categories/web/'>web (1)</a></li>
-<li class='category'><a href='/blog/categories/bing-fa/'>并发 (1)</a></li>
+<li class='category'><a href='/blog/categories/bing-fa/'>并发 (2)</a></li>
  
   </ul> 
 </section><section>
